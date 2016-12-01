@@ -5,7 +5,7 @@
 #'
 #' @param pvalues A vector of raw p-values.
 #' @param FDR A level at which to control the false discovery rate (FDR). Deafults to 0.05.
-#' @param ... Arguments passed to \code{qvalue}.
+#' @param ... Additional arguments passed to \code{\link{qvalue}}.
 #' @return A numeric that is the estimated stable retrospective power.
 #' @seealso \code{\link{qvalue}} how q-values and pi0 are calculated and for arguments.
 #' @export
@@ -13,6 +13,7 @@
 #' # import data
 #' library(qvalue)
 #' data("hedenfalk")
+#' pvalues <- hedenfalk$p
 #'
 #' # calculate SRP
 #' pw <- srp(pvalues, FDR = 0.05)
@@ -21,7 +22,7 @@
 
 srp <- function(pvalues, FDR = 0.05, ...){
 
-  qobj <- qvalue::qvalue(pvalues)
+  qobj <- qvalue::qvalue(pvalues, ...)
   qvalues <- qobj$qvalues
   pi0 <- qobj$pi0
 

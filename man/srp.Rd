@@ -11,7 +11,7 @@ srp(pvalues, FDR = 0.05, ...)
 
 \item{FDR}{A level at which to control the false discovery rate (FDR). Deafults to 0.05.}
 
-\item{...}{Arguments passed to \code{qvalue}.}
+\item{...}{Additional arguments passed to \code{\link{qvalue}}.}
 }
 \value{
 A numeric that is the estimated stable retrospective power.
@@ -23,6 +23,7 @@ A numeric that is the estimated stable retrospective power.
 # import data
 library(qvalue)
 data("hedenfalk")
+pvalues <- hedenfalk$p
 
 # calculate SRP
 pw <- srp(pvalues, FDR = 0.05)
