@@ -30,16 +30,14 @@ srp <- function(pvalues, FDR = 0.05, ...){
   q <- sum(qvalues <= FDR)
 
   if(q == 0){
-    warning("No significant effects", call. = FALSE)
-    pw <- 0
-    return(pw)
+    stop("Sorry, no discoveries!")
   }
 
   n_tests <- length(qvalues)
   pw <- ((1 - FDR) * q) / ((1 - pi0) * n_tests)
 
   if(pw > 1){
-    warning("Infinite power", call. = FALSE)
+    warning("Infinite power!")
     pw <- 1
     return(pw)
   }
