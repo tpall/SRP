@@ -14,9 +14,8 @@ Description: The standard use of null hypothesis significance testing (NHST)
     quality of a single study. This enables to objectively plan for replication
     studies, and to estimate the quality of important parts of scientific literature
     without having to replicate them.
-License: LGPLv3
+License: LGPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Suggests: qvalue
 Imports: qvalue
