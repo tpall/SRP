@@ -28,7 +28,6 @@ srp <- function(pvalues, FDR = 0.05, ...){
 
   qvalues <- qvalues[!is.na(qvalues)]
   q <- sum(qvalues <= FDR)
-  n_tests <- length(qvalues)
 
   if(q == 0){
     warning("No significant effects", call. = FALSE)
@@ -36,6 +35,7 @@ srp <- function(pvalues, FDR = 0.05, ...){
     return(pw)
   }
 
+  n_tests <- length(qvalues)
   pw <- ((1 - FDR) * q) / ((1 - pi0) * n_tests)
 
   if(pw > 1){
