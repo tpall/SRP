@@ -30,7 +30,7 @@ srp <- function(pvalues, FDR = 0.05, ...){
   q <- sum(qvalues <= FDR)
 
   if(q == 0){
-    stop("Sorry, no discoveries!")
+    stop("Sorry, no discoveries! No q-values less than FDR.")
   }
 
   n_tests <- length(qvalues)
