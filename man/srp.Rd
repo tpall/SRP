@@ -2,37 +2,34 @@
 % Please edit documentation in R/srp.R
 \name{srp}
 \alias{srp}
-\title{Stable retrospective power.}
+\title{Stable retrospective power}
 \usage{
-srp(qvalues, pi0, FDR = 0.05)
+srp(pvalues, FDR = 0.05, ...)
 }
 \arguments{
-\item{qvalues}{A vector of q-values.}
-
-\item{pi0}{The proportion of true null p-values.}
+\item{pvalues}{A vector of raw p-values.}
 
 \item{FDR}{A level at which to control the false discovery rate (FDR). Deafults to 0.05.}
+
+\item{...}{Arguments passed to \code{qvalue}.}
 }
 \value{
 A numeric that is the estimated stable retrospective power.
 }
 \description{
-\code{srp} uses q-values, the proportion of true null p-values (pi0) and false discovery rate (FDR) to calculate stable retrospective power.
+\code{srp} uses p-values and false discovery rate (FDR) to calculate stable retrospective power.
 }
 \examples{
 # import data
 library(qvalue)
 data("hedenfalk")
-qobj <- qvalue(hedenfalk$p)
-qvalues <- qobj$qvalues
-pi0 <- qobj$pi0
 
 # calculate SRP
-pw <- srp(qvalues, pi0, FDR = 0.05)
+pw <- srp(pvalues, FDR = 0.05)
 pw
 
 }
 \seealso{
-\code{\link{qvalue}} to calculate q-values and pi0
+\code{\link{qvalue}} how q-values and pi0 are calculated and for arguments.
 }
 

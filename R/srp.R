@@ -1,28 +1,29 @@
 
-#' Stable retrospective power.
+#' Stable retrospective power
 #'
-#' \code{srp} uses q-values, the proportion of true null p-values (pi0) and false discovery rate (FDR) to calculate stable retrospective power.
+#' \code{srp} uses p-values and false discovery rate (FDR) to calculate stable retrospective power.
 #'
-#' @param qvalues A vector of q-values.
-#' @param pi0 The proportion of true null p-values.
+#' @param pvalues A vector of raw p-values.
 #' @param FDR A level at which to control the false discovery rate (FDR). Deafults to 0.05.
+#' @param ... Arguments passed to \code{qvalue}.
 #' @return A numeric that is the estimated stable retrospective power.
-#' @seealso \code{\link{qvalue}} to calculate q-values and pi0
+#' @seealso \code{\link{qvalue}} how q-values and pi0 are calculated and for arguments.
 #' @export
 #' @examples
 #' # import data
 #' library(qvalue)
 #' data("hedenfalk")
-#' qobj <- qvalue(hedenfalk$p)
-#' qvalues <- qobj$qvalues
-#' pi0 <- qobj$pi0
 #'
 #' # calculate SRP
-#' pw <- srp(qvalues, pi0, FDR = 0.05)
+#' pw <- srp(pvalues, FDR = 0.05)
 #' pw
 #'
 
-srp <- function(qvalues, pi0, FDR = 0.05){
+srp <- function(pvalues, FDR = 0.05, ...){
+
+  qobj <- qvalue::qvalue(pvalues)
+  qvalues <- qobj$qvalues
+  pi0 <- qobj$pi0
 
   qvalues <- qvalues[!is.na(qvalues)]
   q <- sum(qvalues <= FDR)
