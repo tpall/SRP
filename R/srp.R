@@ -29,8 +29,8 @@ srp <- function(pvalues, FDR = 0.05, ...){
   qvalues <- qvalues[!is.na(qvalues)]
   q <- sum(qvalues <= FDR)
 
-  if(q == 0){
-    stop("Sorry, no discoveries! No q-values less than FDR.")
+  if(q == 0 && pi0 == 1){
+    stop("No discoveries! Power calculation is not meaningful.")
   }
 
   n_tests <- length(qvalues)
