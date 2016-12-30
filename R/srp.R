@@ -5,9 +5,9 @@
 #'
 #' @param pvalues A vector of raw p-values.
 #' @param FDR A level at which to control the false discovery rate (FDR). Deafults to 0.05.
-#' @param ... Additional arguments passed to \code{\link{qvalue}}.
+#' @param ... Additional arguments passed to \code{\link{qvalue}} and \code{\link{pi0est}}.
 #' @return A numeric that is the estimated stable retrospective power.
-#' @seealso \code{\link{qvalue}} how q-values and pi0 are calculated and for arguments.
+#' @seealso \code{\link{qvalue}} and \code{\link{pi0est}} how q-values and pi0 are calculated and for arguments.
 #' @export
 #' @examples
 #' # import data
@@ -20,29 +20,24 @@
 #' pw
 #'
 
-srp <- function(pvalues, FDR = 0.05, ...){
+srp <- function (pvalues, FDR = 0.05, ...)
+{
+  qobj <- try(qvalue::qvalue(pvalues, fdr.level = FDR, ...), silent = T)
 
-  qobj <- qvalue::qvalue(pvalues, ...)
-  qvalues <- qobj$qvalues
+  if(inherits(qobj, "try-error")){
+    cat(qobj[1])
+    stop("Something's wrong with p values. Check your analysis!\n")
+  }
+
+  ntests <- length(pvalues)
   pi0 <- qobj$pi0
+  qsig <- sum(qobj$significant)
 
-  qvalues <- qvalues[!is.na(qvalues)]
-  q <- sum(qvalues <= FDR)
+  th1 <- (1 - pi0) * ntests
+  dh1 <- (1 - FDR) * qsig
+  pw <- dh1/th1
 
-  if(q == 0 && pi0 == 1){
-    stop("No discoveries! Power calculation is not meaningful.")
-  }
-
-  n_tests <- length(qvalues)
-  pw <- ((1 - FDR) * q) / ((1 - pi0) * n_tests)
-
-  if(pw > 1){
-    warning("Infinite power!")
-    pw <- 1
-    return(pw)
-  }
-
-  return(pw)
+  data.frame(SRP = pw, pi0 = pi0)
 }
 
 
