@@ -22,7 +22,7 @@
 
 srp <- function (pvalues, FDR = 0.05, ...)
 {
-  qobj <- try(qvalue::qvalue(pvalues, fdr.level = FDR, ...), silent = T)
+  qobj <- try(qvalue::qvalue(pvalues, FDR, ...), silent = T)
 
   if(inherits(qobj, "try-error")){
     cat(qobj[1])
