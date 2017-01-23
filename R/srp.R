@@ -25,19 +25,24 @@ srp <- function (pvalues, FDR = 0.05, ...)
   qobj <- try(qvalue::qvalue(pvalues, FDR, ...), silent = T)
 
   if(inherits(qobj, "try-error")){
-    cat(qobj[1])
-    stop("Something's wrong with p values. Check your analysis!\n")
+    msg <- gsub("\\n","", qobj[1])
+    stop(msg)
+  }
+
+  pi0 <- qobj$pi0
+
+  if(pi0==1){
+    stop("The estimated pi0 == 1: no effects. Power calculation is not meaningful.")
   }
 
   ntests <- length(pvalues)
-  pi0 <- qobj$pi0
   qsig <- sum(qobj$significant)
 
   th1 <- (1 - pi0) * ntests
   dh1 <- (1 - FDR) * qsig
-  pw <- dh1/th1
+  SRP <- dh1/th1
 
-  data.frame(SRP = pw, pi0 = pi0)
+  data.frame(SRP, pi0)
 }
 
 
