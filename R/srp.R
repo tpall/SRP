@@ -6,7 +6,13 @@
 #' @param pvalues A vector of raw p-values.
 #' @param FDR A level at which to control the false discovery rate (FDR). Deafults to 0.05.
 #' @param ... Additional arguments passed to \code{\link{qvalue}} and \code{\link{pi0est}}.
-#' @return A numeric that is the estimated stable retrospective power.
+#' @return A data.frame containing:
+#'  SRP that is the estimated stable retrospective power.
+#'  pi0 propotion of the true non-null effects.
+#'  fp the number of the statistically significant effects that are likely to be false positives.
+#'  rs the number of statistically significant true effects seen in this study that will most likely come up as significant in a replication study.
+#'  ud the number undiscovered results awaiting to be uncovered by replication studies.
+#'
 #' @seealso \code{\link{qvalue}} and \code{\link{pi0est}} how q-values and pi0 are calculated and for arguments.
 #' @export
 #' @examples
@@ -41,8 +47,11 @@ srp <- function (pvalues, FDR = 0.05, ...)
   tnn <- (1 - pi0) * k
   td <- (1 - FDR) * d
   SRP <- td/tnn
+  fp <- FDR * d
+  rs <- td * SRP
+  ud <- tnn - td
 
-  data.frame(SRP, pi0)
+  data.frame(SRP, pi0, fp, rs, ud)
 }
 
 
