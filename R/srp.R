@@ -35,12 +35,12 @@ srp <- function (pvalues, FDR = 0.05, ...)
     stop("The estimated pi0 == 1: no effects. Power calculation is not meaningful.")
   }
 
-  ntests <- length(pvalues)
-  qsig <- sum(qobj$significant)
+  k <- length(pvalues)
+  d <- sum(qobj$significant)
 
-  th1 <- (1 - pi0) * ntests
-  dh1 <- (1 - FDR) * qsig
-  SRP <- dh1/th1
+  tnn <- (1 - pi0) * k
+  td <- (1 - FDR) * d
+  SRP <- td/tnn
 
   data.frame(SRP, pi0)
 }
