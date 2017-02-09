@@ -47,7 +47,6 @@ srp <- function (pvalues, FDR = 0.05, ...)
   tnn <- (1 - pi0) * k
   td <- (1 - FDR) * d
   SRP <- td/tnn
-  SRP <- min(SRP, 1)
   fp <- FDR * d
   rs <- td * SRP
   ud <- tnn - td
