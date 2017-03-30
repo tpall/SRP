@@ -48,7 +48,7 @@ srp <- function (pvalues, FDR = 0.05, ...)
   td <- (1 - FDR) * d
 
   if(td>tnn){
-    stop("Use more conservative (smaller) FDR threshold. Power calculation is not meaningful.")
+    stop("Power calculation is not reliable.")
   }
 
   SRP <- td/tnn
