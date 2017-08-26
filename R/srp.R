@@ -14,6 +14,7 @@
 #'  ud the number undiscovered results awaiting to be uncovered by replication studies.
 #'
 #' @seealso \code{\link{qvalue}} and \code{\link{pi0est}} how q-values and pi0 are calculated and for arguments.
+#' @import qvalue
 #' @export
 #' @examples
 #' # import data

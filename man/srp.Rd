@@ -38,4 +38,3 @@ pw
 \seealso{
 \code{\link{qvalue}} and \code{\link{pi0est}} how q-values and pi0 are calculated and for arguments.
 }
-

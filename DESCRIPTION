@@ -17,5 +17,6 @@ Description: The standard use of null hypothesis significance testing (NHST)
 License: LGPL
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Imports: qvalue
+Additional_repositories: setRepositories(ind=1:2)
