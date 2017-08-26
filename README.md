@@ -4,15 +4,15 @@
 
 Calculate retrospective power of your omics experiment.
 
-
-## Import pvalues
+```{r}
+# Import pvalues
 library(qvalue)
 data("hedenfalk")
 pvalues <- hedenfalk$p
 
-## calculate SRP
+# calculate SRP
 library(SRP)
 pw <- srp(pvalues, FDR = 0.05)
 pw
-'''
+```
 
