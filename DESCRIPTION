@@ -18,11 +18,7 @@ License: LGPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-<<<<<<< HEAD
 Imports: BiocInstaller, qvalue
 Remotes: bioc::release/BiocInstaller, bioc::release/qvalue
-=======
-Imports: qvalue
-Remotes: bioc::release/qvalue
->>>>>>> a7e223ab9470e420c132934ab5b83a5348ac9785
+
 
