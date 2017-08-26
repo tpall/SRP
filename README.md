@@ -4,7 +4,7 @@
 
 Calculate retrospective power of your omics experiment.
 
-'''
+
 ## Import pvalues
 library(qvalue)
 data("hedenfalk")
