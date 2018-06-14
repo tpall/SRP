@@ -4,7 +4,7 @@
 
 Calculate retrospective power of your omics experiment.
 
-```{r}
+```
 # Import pvalues
 library(qvalue)
 data("hedenfalk")
@@ -17,7 +17,7 @@ pw
 ```
 
 Install this library:
-```{r}
+```
 install.packages("devtools")
 devtools::install_github("tpall/SRP")
 ```
