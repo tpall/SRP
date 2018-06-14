@@ -29,16 +29,16 @@
 
 srp <- function (pvalues, FDR = 0.05, ...)
 {
-  qobj <- try(qvalue::qvalue(pvalues, FDR, ...), silent = T)
+  qobj <- try(qvalue::qvalue(pvalues, FDR, ...), silent = TRUE)
 
-  if(inherits(qobj, "try-error")){
+  if (inherits(qobj, "try-error")) {
     msg <- gsub("\\n","", qobj[1])
     stop(msg)
   }
 
   pi0 <- qobj$pi0
 
-  if(pi0==1){
+  if (pi0 == 1) {
     stop("The estimated pi0 == 1: no effects. Power calculation is not meaningful.")
   }
 
@@ -48,16 +48,15 @@ srp <- function (pvalues, FDR = 0.05, ...)
   tnn <- (1 - pi0) * k
   td <- (1 - FDR) * d
 
-  if(td>tnn){
+  if (td > tnn) {
     stop("Power calculation is not reliable.")
   }
 
-  SRP <- td/tnn
+  SRP <- td / tnn
   fp <- FDR * d
   rs <- td * SRP
   ud <- tnn - td
 
   data.frame(SRP, pi0, fp, rs, ud)
 }
-
 
