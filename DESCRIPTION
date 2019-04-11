@@ -3,7 +3,7 @@ Type: Package
 Title: Calculate stable retrospective power
 Version: 0.1.0
 Author: Taavi  Päll, Ülo Maiväli
-Maintainer: Taavi Päll <taavi.pall@ttu.ee>
+Maintainer: Taavi Päll <taavi.pall@ut.ee>
 Description: The standard use of null hypothesis significance testing (NHST)
     in controlling the long run quality of an experimental system works poorly in
     the confines of a single experiment. However, in the special case of massively

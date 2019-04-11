@@ -5,7 +5,7 @@
 #'
 #' @param pvalues A vector of raw p-values.
 #' @param FDR A level at which to control the false discovery rate (FDR). Deafults to 0.05.
-#' @param ... Additional arguments passed to \code{\link{qvalue}} and \code{\link{pi0est}}.
+#' @param ... Additional arguments passed to \code{\link{limma}} and \code{\link{propTrueNull}}.
 #' @return A data.frame containing:
 #'  SRP that is the estimated stable retrospective power.
 #'  pi0 propotion of the true non-null effects.

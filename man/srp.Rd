@@ -11,7 +11,7 @@ srp(pvalues, method = "lfdr", FDR = 0.05, ...)
 
 \item{FDR}{A level at which to control the false discovery rate (FDR). Deafults to 0.05.}
 
-\item{...}{Additional arguments passed to \code{\link{qvalue}} and \code{\link{pi0est}}.}
+\item{...}{Additional arguments passed to \code{\link{limma}} and \code{\link{propTrueNull}}.}
 }
 \value{
 A data.frame containing:
@@ -25,17 +25,12 @@ A data.frame containing:
 \code{srp} uses p-values and false discovery rate (FDR) to calculate stable retrospective power.
 }
 \examples{
-# import data
-Test statistics
 z <- rnorm(200)
-First 40 are have non-zero means
 z[1:40] <- z[1:40]+2
-True pi0
 160/200
-Two-sided p-values
 p <- 2*pnorm(-abs(z))
 
-# calculate SRP
+# Calculate SRP
 pw <- srp(pvalues, FDR = 0.05)
 pw
 
