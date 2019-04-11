@@ -4,7 +4,7 @@
 \alias{srp}
 \title{Stable retrospective power}
 \usage{
-srp(pvalues, FDR = 0.05, ...)
+srp(pvalues, method = "lfdr", FDR = 0.05, ...)
 }
 \arguments{
 \item{pvalues}{A vector of raw p-values.}
@@ -26,9 +26,14 @@ A data.frame containing:
 }
 \examples{
 # import data
-library(qvalue)
-data("hedenfalk")
-pvalues <- hedenfalk$p
+Test statistics
+z <- rnorm(200)
+First 40 are have non-zero means
+z[1:40] <- z[1:40]+2
+True pi0
+160/200
+Two-sided p-values
+p <- 2*pnorm(-abs(z))
 
 # calculate SRP
 pw <- srp(pvalues, FDR = 0.05)
@@ -36,5 +41,5 @@ pw
 
 }
 \seealso{
-\code{\link{qvalue}} and \code{\link{pi0est}} how q-values and pi0 are calculated and for arguments.
+\code{\link{limma}} and \code{\link{propTrueNull}} how pi0 is calculated and for arguments.
 }

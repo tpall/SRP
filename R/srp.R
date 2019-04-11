@@ -13,37 +13,40 @@
 #'  rs the number of statistically significant true effects seen in this study that will most likely come up as significant in a replication study.
 #'  ud the number undiscovered results awaiting to be uncovered by replication studies.
 #'
-#' @seealso \code{\link{qvalue}} and \code{\link{pi0est}} how q-values and pi0 are calculated and for arguments.
-#' @import qvalue
+#' @seealso \code{\link{limma}} and \code{\link{propTrueNull}} how pi0 is calculated and for arguments.
+#' @import limma
 #' @export
 #' @examples
 #' # import data
-#' library(qvalue)
-#' data("hedenfalk")
-#' pvalues <- hedenfalk$p
+#' Test statistics
+#' z <- rnorm(200)
+#' First 40 are have non-zero means
+#' z[1:40] <- z[1:40]+2
+#' True pi0
+#' 160/200
+#' Two-sided p-values
+#' p <- 2*pnorm(-abs(z))
 #'
 #' # calculate SRP
 #' pw <- srp(pvalues, FDR = 0.05)
 #' pw
 #'
 
-srp <- function (pvalues, FDR = 0.05, ...)
+srp <- function (pvalues, method = "lfdr", FDR = 0.05, ...)
 {
-  qobj <- try(qvalue::qvalue(pvalues, FDR, ...), silent = TRUE)
+  pi0 <- try(limma::propTrueNull(pvalues, method, ...), silent = TRUE)
 
-  if (inherits(qobj, "try-error")) {
-    msg <- gsub("\\n","", qobj[1])
+  if (inherits(pi0, "try-error")) {
+    msg <- gsub("\\n","", pi0[1])
     stop(msg)
   }
 
-  pi0 <- qobj$pi0
-
-  if (pi0 == 1) {
+  if (dplyr::near(pi0, 1)) {
     stop("The estimated pi0 == 1: no effects. Power calculation is not meaningful.")
   }
 
   k <- length(pvalues)
-  d <- sum(qobj$significant)
+  d <- sum(pvalues < FDR)
 
   tnn <- (1 - pi0) * k
   td <- (1 - FDR) * d
