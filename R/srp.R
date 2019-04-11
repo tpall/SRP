@@ -17,17 +17,16 @@
 #' @import limma
 #' @export
 #' @examples
-#' # import data
-#' Test statistics
+#' # Test statistics
 #' z <- rnorm(200)
-#' First 40 are have non-zero means
+#' # First 40 are have non-zero means
 #' z[1:40] <- z[1:40]+2
-#' True pi0
+#' # True pi0
 #' 160/200
-#' Two-sided p-values
+#' # Two-sided p-values
 #' p <- 2*pnorm(-abs(z))
 #'
-#' # calculate SRP
+#' # Calculate SRP
 #' pw <- srp(pvalues, FDR = 0.05)
 #' pw
 #'
