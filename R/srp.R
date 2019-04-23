@@ -17,17 +17,17 @@
 #' @import limma
 #' @export
 #' @examples
-#' z <- rnorm(200)
-#' z[1:40] <- z[1:40]+2
-#' 160/200
+#' z <- rnorm(1000)
+#' z[1:200] <- z[1:200]+10
+#' 1800/2000
 #' p <- 2*pnorm(-abs(z))
 #'
 #' # Calculate SRP
-#' pw <- srp(pvalues, FDR = 0.05)
+#' pw <- srp(p, FDR = 0.05)
 #' pw
 #'
 
-srp <- function (pvalues, method = "lfdr", FDR = 0.05, ...)
+srp <- function(pvalues, method = "lfdr", FDR = 0.05, ...)
 {
   pi0 <- try(limma::propTrueNull(pvalues, method, ...), silent = TRUE)
 
@@ -37,7 +37,8 @@ srp <- function (pvalues, method = "lfdr", FDR = 0.05, ...)
   }
 
   if (dplyr::near(pi0, 1)) {
-    stop("The estimated pi0 == 1: no effects. Power calculation is not meaningful.")
+    warning("The estimated pi0 == 1: no effects. Power calculation is not meaningful. Returning only pi0.")
+    return(data.frame(SRP = NULL, pi0 = pi0, fp = NULL, rs = NULL, ud = NULL))
   }
 
   k <- length(pvalues)
@@ -47,7 +48,8 @@ srp <- function (pvalues, method = "lfdr", FDR = 0.05, ...)
   td <- (1 - FDR) * d
 
   if (td > tnn) {
-    stop("Power calculation is not reliable.")
+    warning("Power calculation is not reliable. Returning only pi0.")
+    return(data.frame(SRP = NULL, pi0 = pi0, fp = NULL, rs = NULL, ud = NULL))
   }
 
   SRP <- td / tnn
@@ -55,6 +57,6 @@ srp <- function (pvalues, method = "lfdr", FDR = 0.05, ...)
   rs <- td * SRP
   ud <- tnn - td
 
-  data.frame(SRP, pi0, fp, rs, ud)
+  return(data.frame(SRP = SRP, pi0 = pi0, fp = fp, rs = rs, ud = ud))
 }
 
