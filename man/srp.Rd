@@ -9,6 +9,8 @@ srp(pvalues, method = "lfdr", FDR = 0.05, ...)
 \arguments{
 \item{pvalues}{A vector of raw p-values.}
 
+\item{method}{estimation method passed to limma::propTrueNull. Choices are "lfdr", "mean", "hist" or "convest".}
+
 \item{FDR}{A level at which to control the false discovery rate (FDR). Deafults to 0.05.}
 
 \item{...}{Additional arguments passed to \code{\link{limma}} and \code{\link{propTrueNull}}.}
@@ -25,13 +27,13 @@ A data.frame containing:
 \code{srp} uses p-values and false discovery rate (FDR) to calculate stable retrospective power.
 }
 \examples{
-z <- rnorm(200)
-z[1:40] <- z[1:40]+2
-160/200
+z <- rnorm(1000)
+z[1:200] <- z[1:200]+10
+1800/2000
 p <- 2*pnorm(-abs(z))
 
 # Calculate SRP
-pw <- srp(pvalues, FDR = 0.05)
+pw <- srp(p, FDR = 0.05)
 pw
 
 }

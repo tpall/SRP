@@ -5,6 +5,7 @@
 #'
 #' @param pvalues A vector of raw p-values.
 #' @param FDR A level at which to control the false discovery rate (FDR). Deafults to 0.05.
+#' @param method estimation method passed to limma::propTrueNull. Choices are "lfdr", "mean", "hist" or "convest".
 #' @param ... Additional arguments passed to \code{\link{limma}} and \code{\link{propTrueNull}}.
 #' @return A data.frame containing:
 #'  SRP that is the estimated stable retrospective power.
@@ -38,7 +39,7 @@ srp <- function(pvalues, method = "lfdr", FDR = 0.05, ...)
 
   if (dplyr::near(pi0, 1)) {
     warning("The estimated pi0 == 1: no effects. Power calculation is not meaningful. Returning only pi0.")
-    return(data.frame(SRP = NULL, pi0 = pi0, fp = NULL, rs = NULL, ud = NULL))
+    return(data.frame(SRP = NA, pi0 = pi0, fp = NA, rs = NA, ud = NA))
   }
 
   k <- length(pvalues)
@@ -49,7 +50,7 @@ srp <- function(pvalues, method = "lfdr", FDR = 0.05, ...)
 
   if (td > tnn) {
     warning("Power calculation is not reliable. Returning only pi0.")
-    return(data.frame(SRP = NULL, pi0 = pi0, fp = NULL, rs = NULL, ud = NULL))
+    return(data.frame(SRP = NA, pi0 = pi0, fp = NA, rs = NA, ud = NA))
   }
 
   SRP <- td / tnn
